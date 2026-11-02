@@ -5,7 +5,9 @@ import { Check, Copy, Info, WandSparkles } from "lucide-react";
 import { CaptionTextInput } from "@/components/content-studio/caption-text-input";
 import { FontResultCard, type CopyFeedback } from "@/components/content-studio/font-result-card";
 import { EmptyState } from "@/components/dashboard/empty-state";
+import { PageHeader } from "@/components/dashboard/page-header";
 import { SectionHeader } from "@/components/dashboard/section-header";
+import { Button } from "@/components/ui/button";
 import { CAPTION_FONT_STYLES, countCaptionCharacters, transformCaptionText } from "@/lib/caption-fonts";
 
 type FeedbackTarget = "all" | (typeof CAPTION_FONT_STYLES)[number]["id"];
@@ -67,19 +69,12 @@ export function CaptionFontGenerator() {
     .join("\n\n");
 
   return (
-    <div className="mx-auto max-w-[1440px] space-y-6 sm:space-y-7">
-      <section>
-        <div className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-[11px] font-medium text-violet-700 dark:border-violet-900/70 dark:bg-violet-950/60 dark:text-violet-300">
-          <WandSparkles size={13} aria-hidden="true" />
-          Content Studio
-        </div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-[28px]">
-          Caption Font Generator
-        </h1>
-        <p className="mt-2 max-w-3xl text-sm leading-6 text-muted-foreground">
-          Turn a caption into copy-ready Unicode text styles for social media.
-        </p>
-      </section>
+    <div className="page-container space-y-6">
+      <PageHeader
+        eyebrow={<span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary"><WandSparkles size={14} aria-hidden="true" />Content Studio</span>}
+        title="Caption Font Generator"
+        description="Preview 15 Unicode text styles and copy the version you want to use in a caption."
+      />
 
       <CaptionTextInput
         value={text}
@@ -88,32 +83,30 @@ export function CaptionFontGenerator() {
         onClear={clearText}
       />
 
-      <section className="rounded-xl border border-violet-200/80 bg-violet-50/70 px-4 py-3.5 dark:border-violet-900/70 dark:bg-violet-950/25" aria-label="Unicode text accessibility note">
-        <div className="flex items-start gap-3">
-          <Info size={17} className="mt-0.5 shrink-0 text-violet-700 dark:text-violet-300" aria-hidden="true" />
-          <p className="text-xs leading-5 text-violet-950 dark:text-violet-100">
-            These styles use Unicode characters, not font formatting. Their appearance and pronunciation can vary by platform and screen reader. Characters without a matching Unicode style are kept unchanged.
-          </p>
-        </div>
-      </section>
+      <aside className="ui-notice flex items-start gap-3 rounded-xl px-4 py-3" aria-label="Unicode text compatibility note">
+        <Info size={16} className="mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+        <p className="text-xs leading-5 text-secondary-foreground">
+          These styles use Unicode characters, not font formatting. Their appearance and pronunciation can vary by platform and screen reader. Characters without a matching Unicode style are kept unchanged.
+        </p>
+      </aside>
 
       <section aria-labelledby="font-results-heading">
         <SectionHeader
           id="font-results-heading"
-          title="Font styles"
-          description="Choose a style and copy the transformed text."
+          title="Generated styles"
+          description="Choose a style to copy. All 15 variations update as you edit the caption."
           action={text ? (
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              size="small"
               onClick={() => copyToClipboard(allResultsText, "all")}
-              className="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-lg border border-violet-200 bg-violet-50 px-3 text-xs font-semibold text-violet-800 transition hover:bg-violet-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:border-violet-900 dark:bg-violet-950/40 dark:text-violet-200 dark:hover:bg-violet-950"
               aria-label="Copy all 15 styled caption results with their style names"
             >
               {copyState?.target === "all" && copyState.feedback.status === "success" ? (
                 <Check size={14} aria-hidden="true" />
               ) : <Copy size={14} aria-hidden="true" />}
-              {copyState?.target === "all" && copyState.feedback.status === "success" ? "Copied all" : "Copy all"}
-            </button>
+              {copyState?.target === "all" && copyState.feedback.status === "success" ? "Copied all" : "Copy all styles"}
+            </Button>
           ) : null}
         />
 
@@ -129,7 +122,7 @@ export function CaptionFontGenerator() {
                 {copyState.feedback.message}
               </p>
             ) : null}
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {results.map((result) => (
                 <FontResultCard
                   key={result.id}
