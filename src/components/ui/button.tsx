@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes } from "react";
 
 type ButtonVariant = "primary" | "secondary" | "quiet" | "destructive";
-type ButtonSize = "default" | "icon";
+type ButtonSize = "default" | "small" | "icon";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
@@ -15,7 +15,13 @@ export function Button({
   type = "button",
   ...props
 }: ButtonProps) {
-  const classes = ["ui-button", `ui-button-${variant}`, size === "icon" ? "ui-icon-button" : "", className]
+  const classes = [
+    "ui-button",
+    `ui-button-${variant}`,
+    size === "small" ? "ui-button-small" : "",
+    size === "icon" ? "ui-icon-button" : "",
+    className,
+  ]
     .filter(Boolean)
     .join(" ");
 
