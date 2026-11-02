@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, Command, Plus, Sparkles, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Command, Sparkles, X } from "lucide-react";
 import { navigationGroups } from "@/components/dashboard/navigation";
 import { NavItem } from "@/components/dashboard/nav-item";
 
@@ -32,7 +32,6 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate, isMobileDrawe
               <span className="block truncate text-xs font-semibold text-foreground">SFA Creative</span>
               <span className="mt-0.5 block text-[11px] text-muted-foreground">Workspace</span>
             </span>
-            <Plus size={15} className="text-muted-foreground" aria-hidden="true" />
           </>
         ) : <span className="sr-only">SFA Creative workspace</span>}
       </div>

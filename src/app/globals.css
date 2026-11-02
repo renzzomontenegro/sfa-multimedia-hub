@@ -410,17 +410,6 @@ summary:focus-visible {
   opacity: 0.5;
 }
 
-.notification-dot {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 6px;
-  height: 6px;
-  border: 1px solid var(--card);
-  border-radius: 50%;
-  background: #8a6bed;
-}
-
 .profile-menu {
   position: relative;
 }
@@ -464,8 +453,7 @@ summary:focus-visible {
   color: #d0c3ff;
 }
 
-.profile-popover,
-.notification-popover {
+.profile-popover {
   position: absolute;
   z-index: 30;
   top: calc(100% + 10px);
@@ -476,10 +464,6 @@ summary:focus-visible {
   border-radius: 12px;
   background: var(--card);
   box-shadow: 0 14px 40px rgb(20 17 42 / 14%);
-}
-
-.notification-popover {
-  padding: 15px;
 }
 
 .mobile-menu-button {
@@ -502,7 +486,7 @@ summary:focus-visible {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .desktop-sidebar {
     display: none;
   }

@@ -79,7 +79,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         </div>
       ) : null}
 
-      <div className="dashboard-main">
+      <div className="dashboard-main" inert={mobileNavigationOpen}>
         <Topbar onOpenNavigation={() => setMobileNavigationOpen((value) => !value)} navigationOpen={mobileNavigationOpen} />
         <main className="dashboard-content">{children}</main>
       </div>
