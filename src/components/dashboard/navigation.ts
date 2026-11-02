@@ -1,5 +1,6 @@
 import {
   Archive,
+  BookOpen,
   CalendarDays,
   CheckSquare,
   CircleHelp,
@@ -36,6 +37,7 @@ export const navigationGroups: NavigationGroup[] = [
   {
     label: "Content Studio",
     items: [
+      { label: "Brand Kit", pageTitle: "Brand Kit", icon: BookOpen, href: "/content-studio/brand-kit" },
       { label: "Caption Builder", pageTitle: "Caption Builder", icon: PenLine, href: "/content-studio/caption-builder" },
       { label: "Caption Font Generator", pageTitle: "Caption Font Generator", icon: Type, href: "/content-studio/caption-font-generator" },
       { label: "Social Media Preview", pageTitle: "Social Media Preview", icon: Images, href: "/content-studio/social-media-preview" },
