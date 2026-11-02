@@ -7,8 +7,11 @@ import {
   LayoutDashboard,
   Library,
   Palette,
+  PenLine,
   Settings2,
   Sparkles,
+  Type,
+  Images,
   Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -17,7 +20,7 @@ export type NavigationEntry = {
   label: string;
   icon: LucideIcon;
   href?: string;
-  current?: boolean;
+  pageTitle?: string;
 };
 
 export type NavigationGroup = {
@@ -28,11 +31,14 @@ export type NavigationGroup = {
 export const navigationGroups: NavigationGroup[] = [
   {
     label: "Overview",
-    items: [{ label: "Dashboard", icon: LayoutDashboard, href: "/", current: true }],
+    items: [{ label: "Dashboard", pageTitle: "Overview", icon: LayoutDashboard, href: "/" }],
   },
   {
     label: "Content Studio",
     items: [
+      { label: "Caption Builder", pageTitle: "Caption Builder", icon: PenLine, href: "/content-studio/caption-builder" },
+      { label: "Caption Font Generator", pageTitle: "Caption Font Generator", icon: Type, href: "/content-studio/caption-font-generator" },
+      { label: "Social Media Preview", pageTitle: "Social Media Preview", icon: Images, href: "/content-studio/social-media-preview" },
       { label: "Content calendar", icon: CalendarDays },
       { label: "Campaigns", icon: Clapperboard },
       { label: "Approvals", icon: CheckSquare },
@@ -67,3 +73,17 @@ export const navigationGroups: NavigationGroup[] = [
     ],
   },
 ];
+
+export function isNavigationEntryCurrent(pathname: string, href?: string) {
+  if (!href) return false;
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function getCurrentPageTitle(pathname: string) {
+  for (const group of navigationGroups) {
+    const match = group.items.find((item) => isNavigationEntryCurrent(pathname, item.href));
+    if (match) return match.pageTitle ?? match.label;
+  }
+
+  return "Dashboard";
+}

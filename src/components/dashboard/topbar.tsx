@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Bell, ChevronRight, Menu, Search } from "lucide-react";
+import { ChevronRight, Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { getCurrentPageTitle } from "@/components/dashboard/navigation";
 import { ProfileMenu } from "@/components/dashboard/profile-menu";
 import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 
@@ -11,7 +12,8 @@ type TopbarProps = {
 };
 
 export function Topbar({ onOpenNavigation, navigationOpen }: TopbarProps) {
-  const [noticeOpen, setNoticeOpen] = useState(false);
+  const pathname = usePathname();
+  const pageTitle = getCurrentPageTitle(pathname);
 
   return (
     <header className="topbar">
@@ -28,33 +30,12 @@ export function Topbar({ onOpenNavigation, navigationOpen }: TopbarProps) {
         <nav className="hidden items-center gap-2 text-sm sm:flex" aria-label="Breadcrumb">
           <span className="text-muted-foreground">Workspace</span>
           <ChevronRight size={14} className="text-muted-foreground/70" aria-hidden="true" />
-          <span className="font-medium text-foreground" aria-current="page">Overview</span>
+          <span className="font-medium text-foreground" aria-current="page">{pageTitle}</span>
         </nav>
-        <span className="font-semibold text-foreground sm:hidden">Overview</span>
+        <span className="font-semibold text-foreground sm:hidden">{pageTitle}</span>
       </div>
 
       <div className="flex items-center gap-1.5 sm:gap-2">
-        <button type="button" className="icon-button hidden sm:inline-flex" aria-label="Search is planned for a future phase" disabled title="Search is planned for a future phase">
-          <Search size={18} aria-hidden="true" />
-        </button>
-        <div className="relative">
-          <button
-            type="button"
-            className="icon-button"
-            onClick={() => setNoticeOpen((open) => !open)}
-            aria-label={noticeOpen ? "Close notifications placeholder" : "Open notifications placeholder"}
-            aria-expanded={noticeOpen}
-          >
-            <Bell size={18} aria-hidden="true" />
-            <span className="notification-dot" aria-hidden="true" />
-          </button>
-          {noticeOpen ? (
-            <div className="notification-popover" role="status">
-              <p className="text-sm font-medium text-foreground">Notifications</p>
-              <p className="mt-1 text-xs leading-5 text-muted-foreground">Notification features will be available in a later phase.</p>
-            </div>
-          ) : null}
-        </div>
         <ThemeToggle />
         <span className="mx-1 hidden h-7 w-px bg-border sm:block" aria-hidden="true" />
         <ProfileMenu />

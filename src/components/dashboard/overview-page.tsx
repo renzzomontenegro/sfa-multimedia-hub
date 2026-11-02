@@ -1,5 +1,6 @@
-import { ArrowUpRight, Clock3 } from "lucide-react";
+import { Clock3 } from "lucide-react";
 import { ActivityItem } from "@/components/dashboard/activity-item";
+import { EmptyState } from "@/components/dashboard/empty-state";
 import { RecentAssetsList } from "@/components/dashboard/recent-assets-list";
 import { SectionHeader } from "@/components/dashboard/section-header";
 import { StatCard } from "@/components/dashboard/stat-card";
@@ -15,7 +16,7 @@ export function OverviewPage() {
             <span className="size-1.5 rounded-full bg-violet-500" aria-hidden="true" />
             Sample dashboard data
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-[28px]">Good morning, creative team</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-[28px]">Welcome back, creative team</h1>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
             Here’s what’s happening across your multimedia workspace today.
           </p>
@@ -26,24 +27,28 @@ export function OverviewPage() {
       </section>
 
       <section aria-label="Workspace summary" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {dashboardStats.map((stat) => <StatCard key={stat.label} stat={stat} />)}
+        {dashboardStats.length === 0 ? (
+          <div className="sm:col-span-2 xl:col-span-4">
+            <EmptyState title="No workspace summary yet" description="Summary cards will appear when dashboard data is available." />
+          </div>
+        ) : dashboardStats.map((stat) => <StatCard key={stat.label} stat={stat} />)}
       </section>
 
       <section className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
-        <div className="surface-card p-5 sm:p-6">
+        <section className="surface-card p-5 sm:p-6" aria-labelledby="recent-activity-heading">
           <SectionHeader
+            id="recent-activity-heading"
             title="Recent activity"
             description="A pulse on what your team has been working on"
-            action={
-              <span className="inline-flex items-center gap-1 text-xs font-medium text-violet-700 dark:text-violet-300">
-                Latest <ArrowUpRight size={14} aria-hidden="true" />
-              </span>
-            }
           />
-          <ul className="divide-y divide-border">
-            {recentActivity.map((activity) => <ActivityItem key={activity.id} activity={activity} />)}
-          </ul>
-        </div>
+          {recentActivity.length === 0 ? (
+            <EmptyState title="No recent activity" description="Team updates will appear here when work begins." />
+          ) : (
+            <ul className="divide-y divide-border">
+              {recentActivity.map((activity) => <ActivityItem key={activity.id} activity={activity} />)}
+            </ul>
+          )}
+        </section>
         <UpcomingContentList />
       </section>
 

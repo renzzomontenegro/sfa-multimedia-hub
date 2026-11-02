@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { NavigationEntry } from "@/components/dashboard/navigation";
+import { usePathname } from "next/navigation";
+import { isNavigationEntryCurrent, type NavigationEntry } from "@/components/dashboard/navigation";
 
 type NavItemProps = {
   item: NavigationEntry;
@@ -10,9 +11,11 @@ type NavItemProps = {
 };
 
 export function NavItem({ item, collapsed, onNavigate }: NavItemProps) {
+  const pathname = usePathname();
   const Icon = item.icon;
-  const classes = `nav-item${item.current ? " nav-item-current" : ""}${collapsed ? " nav-item-collapsed" : ""}`;
-  const label = item.current ? item.label : `${item.label} — planned for a future phase`;
+  const current = isNavigationEntryCurrent(pathname, item.href);
+  const classes = `nav-item${current ? " nav-item-current" : ""}${collapsed ? " nav-item-collapsed" : ""}`;
+  const label = current ? item.label : `${item.label} — planned for a future phase`;
 
   if (item.href) {
     return (
@@ -20,7 +23,7 @@ export function NavItem({ item, collapsed, onNavigate }: NavItemProps) {
         href={item.href}
         onClick={onNavigate}
         className={classes}
-        aria-current={item.current ? "page" : undefined}
+        aria-current={current ? "page" : undefined}
         title={collapsed ? item.label : undefined}
       >
         <Icon size={18} aria-hidden="true" />
