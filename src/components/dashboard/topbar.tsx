@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { getCurrentPageTitle } from "@/components/dashboard/navigation";
 import { ProfileMenu } from "@/components/dashboard/profile-menu";
 import { ThemeToggle } from "@/components/dashboard/theme-toggle";
+import { Button } from "@/components/ui/button";
 
 type TopbarProps = {
   onOpenNavigation: () => void;
@@ -18,15 +19,17 @@ export function Topbar({ onOpenNavigation, navigationOpen }: TopbarProps) {
   return (
     <header className="topbar">
       <div className="flex min-w-0 items-center gap-3">
-        <button
+        <Button
           type="button"
+          variant="quiet"
+          size="icon"
           className="icon-button mobile-menu-button"
           onClick={onOpenNavigation}
           aria-label={navigationOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={navigationOpen}
         >
           <Menu size={19} aria-hidden="true" />
-        </button>
+        </Button>
         <nav className="hidden items-center gap-2 text-sm sm:flex" aria-label="Breadcrumb">
           <span className="text-muted-foreground">Workspace</span>
           <ChevronRight size={14} className="text-muted-foreground/70" aria-hidden="true" />

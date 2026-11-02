@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
 const subscribe = () => () => {};
 const getClientSnapshot = () => true;
@@ -16,14 +17,16 @@ export function ThemeToggle() {
   const label = isDark ? "Switch to light theme" : "Switch to dark theme";
 
   return (
-    <button
+    <Button
       type="button"
+      variant="quiet"
+      size="icon"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="icon-button"
       aria-label={label}
       title={label}
     >
       {isDark ? <Sun aria-hidden="true" size={18} /> : <Moon aria-hidden="true" size={18} />}
-    </button>
+    </Button>
   );
 }

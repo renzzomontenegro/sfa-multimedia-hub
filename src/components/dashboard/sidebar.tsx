@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight, Command, Sparkles, X } from "lucide-react";
 import { navigationGroups } from "@/components/dashboard/navigation";
 import { NavItem } from "@/components/dashboard/nav-item";
+import { Button } from "@/components/ui/button";
 
 type SidebarProps = {
   collapsed: boolean;
@@ -59,8 +60,9 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate, isMobileDrawe
             </span>
           ) : <span className="sr-only">Your creative space</span>}
         </div>
-        <button
+        <Button
           type="button"
+          variant="quiet"
           className="sidebar-collapse"
           onClick={onToggleCollapse}
           aria-label={isMobileDrawer ? "Close navigation menu" : collapsed ? "Expand sidebar" : "Collapse sidebar"}
@@ -68,7 +70,7 @@ export function Sidebar({ collapsed, onToggleCollapse, onNavigate, isMobileDrawe
         >
           {isMobileDrawer ? <X size={17} aria-hidden="true" /> : collapsed ? <ChevronRight size={17} aria-hidden="true" /> : <ChevronLeft size={17} aria-hidden="true" />}
           {!collapsed ? <span>{isMobileDrawer ? "Close navigation" : "Collapse sidebar"}</span> : null}
-        </button>
+        </Button>
       </div>
     </aside>
   );
